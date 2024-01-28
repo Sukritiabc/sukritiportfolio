@@ -9,17 +9,23 @@ def change_password(username, current_password, new_password):
                 parts = line.split(":")
                 existing_username = parts[0].strip().lower()
                 existing_password = parts[2].strip()
-
+                
                 if existing_username == username:
                     user_found = True
-                    if existing_password == current_password:
+                    if new_password == existing_password:
+                            print("same password given. give different password")
+                            exit()
+                    elif existing_password == current_password:
                         new_password_confirm = input("Confirm: ").strip()
+                        
                         if new_password == new_password_confirm:
                             parts[2] = new_password
                             file.write(":".join(parts))
                             print("Password changed.")
+                       
                         else:
                             print("Passwords do not match. No change made.")
+                    
                     else:
                         print("Invalid current password. No change made.")
                 else:
