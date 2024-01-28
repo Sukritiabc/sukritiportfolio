@@ -9,16 +9,15 @@ def change_password(username, current_password, new_password):
                 parts = line.split(":")
                 existing_username = parts[0].strip().lower()
                 existing_password = parts[2].strip()
-                
-                if existing_username == username:
+
+                if existing_username == username: #checking if user exists
                     user_found = True
-                    if new_password == existing_password:
+                    if existing_password == current_password: #if correct pw 
+                        new_password_confirm = input("Confirm: ").strip()
+                        if new_password == existing_password: #if new pw is same as old pw
                             print("same password given. give different password")
                             exit()
-                    elif existing_password == current_password:
-                        new_password_confirm = input("Confirm: ").strip()
-                        
-                        if new_password == new_password_confirm:
+                        if new_password == new_password_confirm: #confirming new pw
                             parts[2] = new_password
                             file.write(":".join(parts))
                             print("Password changed.")
@@ -31,12 +30,13 @@ def change_password(username, current_password, new_password):
                 else:
                     file.write(line)
 
-            if not user_found:
+            if not user_found: #if no user
                 print("User not found. No change made.")
     except FileNotFoundError:
         print("File not found. No change made.")
 
 if __name__ == "__main__":
+    #asking input
     change_username = input("User: ").strip().lower()
     current_password = input("Current Password: ").strip()
     new_password = input("New Password: ").strip()
