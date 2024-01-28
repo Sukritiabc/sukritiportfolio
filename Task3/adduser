@@ -1,0 +1,31 @@
+import hashlib
+
+def adduser():
+    username = input("Enter new username: ").strip().lower()
+    real_name = input("Enter real name: ").strip()
+    password = input("Enter password: ").strip()
+
+    try:
+        with open("passwd.txt", "r") as file:
+            lines = file.readlines()
+            existing_usernames = [line.split(":")[0].lower() for line in lines]
+            if username in existing_usernames:
+                print("Cannot add. Most likely username already exists.")
+                return
+    except FileNotFoundError:
+        pass
+
+    encrypted_password = hash_password(password)
+    new_entry = f"{username}:{real_name}:{encrypted_password}\n"
+
+    with open("passwd.txt", "a") as file:
+        file.write(new_entry)
+
+    print("User Created.")
+
+def hash_password(password):
+    # Using hashlib to hash the password
+    return hashlib.sha256(password.encode()).hexdigest()
+
+if __name__ == "__main__":
+    adduser()
