@@ -1,0 +1,2 @@
+username:real_name:password
+user:user:sukritisukritibar:sukriti:sukriti
